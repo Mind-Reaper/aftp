@@ -3,6 +3,8 @@ import 'package:aftp/widgets/expanded_section.dart';
 import 'package:aftp/widgets/schedule_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class Schedule extends StatefulWidget {
@@ -13,11 +15,23 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  List<String> days = ['Nov 12', 'Nov 13', 'Nov 14', 'Nov 15'];
+
+List<DateTime> dates = [DateTime.now()];
 
   int selectedDay = 0;
 
-  ItemScrollController verticalController = ItemScrollController();
+  AutoScrollController controller = AutoScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    for (int i = 1 ;i < 8; i++) {
+      dates.add(DateTime.now().add(Duration(days: i)));
+    }
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,32 +84,35 @@ class _ScheduleState extends State<Schedule> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: ScrollablePositionedList.builder(
+                      child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           physics: ClampingScrollPhysics(),
-                          itemScrollController: verticalController,
-                          itemCount: days.length,
+                          controller: controller,
+                          itemCount: dates.length,
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                selectedDay = index;
-
-                                verticalController.scrollTo(
-                                    index: index, duration: Duration(milliseconds: 100));
-                                setState(() {});
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      selectedDay == index ? Color(0xff246BFD) : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(20),
+                            return AutoScrollTag(
+                              key: ValueKey(index),
+                              index: index,
+                              controller: controller,
+                              child: GestureDetector(
+                                onTap: () {
+                                  selectedDay = index;
+                                  controller.scrollToIndex(index, preferPosition: AutoScrollPosition.middle);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        selectedDay == index ? Color(0xff246BFD) : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+                                  child: Center(
+                                      child: Text(
+                                        Jiffy(dates[index]).format('MMM dd'),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                                  )),
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                                child: Center(
-                                    child: Text(
-                                  days[index],
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-                                )),
                               ),
                             );
                           }),
@@ -116,7 +133,7 @@ class _ScheduleState extends State<Schedule> {
                 physics: BouncingScrollPhysics(),
                 children: [
                   ScheduleList(
-                      title: '0040-0000',
+                      title: '0000-0400',
                       child: Column(
                         children: [
                           ScheduleCard(),
@@ -135,7 +152,79 @@ class _ScheduleState extends State<Schedule> {
                       )),
 
                   ScheduleList(
-                      title: '0040-0000',
+                      title: '0400-0800',
+                      child: Column(
+                        children: [
+                          ScheduleCard(),
+                          ScheduleCard(
+                            title: 'SN Liao',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                          ),
+                          ScheduleCard(
+                            title: 'SN Long',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                            enabled: true,
+                          )
+                        ],
+                      )),
+                  ScheduleList(
+                      title: '0400-0800',
+                      child: Column(
+                        children: [
+                          ScheduleCard(),
+                          ScheduleCard(
+                            title: 'SN Liao',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                          ),
+                          ScheduleCard(
+                            title: 'SN Long',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                            enabled: true,
+                          )
+                        ],
+                      )),
+                  ScheduleList(
+                      title: '1200-1600',
+                      child: Column(
+                        children: [
+                          ScheduleCard(),
+                          ScheduleCard(
+                            title: 'SN Liao',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                          ),
+                          ScheduleCard(
+                            title: 'SN Long',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                            enabled: true,
+                          )
+                        ],
+                      )),
+                  ScheduleList(
+                      title: '1600-2000',
+                      child: Column(
+                        children: [
+                          ScheduleCard(),
+                          ScheduleCard(
+                            title: 'SN Liao',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                          ),
+                          ScheduleCard(
+                            title: 'SN Long',
+                            subtitle: 'Sentry/Rover',
+                            subtitleColor: Color(0xffA5F59C),
+                            enabled: true,
+                          )
+                        ],
+                      )),
+                  ScheduleList(
+                      title: '2000-2400',
                       child: Column(
                         children: [
                           ScheduleCard(),

@@ -108,7 +108,7 @@ class ScheduleCard extends StatelessWidget {
           ),
           child: ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: SizedBox(width: 40,),
+            leading: Image(image: AssetImage('assets/images/chat.png'),height: 24,),
             minLeadingWidth: 0,
             title: Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16), maxLines: 1,),
             subtitle: Text(subtitle, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: subtitleColor), maxLines: 1,),

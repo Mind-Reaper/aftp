@@ -13,7 +13,7 @@ class StateProvider with ChangeNotifier{
   String name = '';
  int theme = 0;
   TimeOfDay nextWatch = TimeOfDay.now().replacing(minute: 30);
-  late TimeOfDay currentWatch;
+  late TimeOfDay currentWatch =  TimeOfDay.now() ;
   bool timerRunning = false;
 
 

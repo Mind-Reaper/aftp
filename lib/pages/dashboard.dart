@@ -22,15 +22,13 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int watch = 0;
 
-
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     var stateProvider = Provider.of<StateProvider>(context, listen: false);
-Future.microtask(() => stateProvider.startTimer());
+    Future.microtask(() => stateProvider.startTimer());
   }
 
   @override
@@ -188,7 +186,7 @@ Future.microtask(() => stateProvider.startTimer());
                               ]),
                         ),
                         Text(
-                          watch == 0
+                          watch == 1
                               ? stateProvider.nextWatch
                                   .format(context)
                                   .replaceAll(' PM', "")
