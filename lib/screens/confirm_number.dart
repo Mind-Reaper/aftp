@@ -53,7 +53,7 @@ class _ConfirmNumberState extends State<ConfirmNumber> {
                         key: key,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
-                          if (value!.length < 10) {
+                          if (value!.length < 8) {
                             return 'Please enter a valid number!';
                           } else {
                             return null;
